@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diablo II Area Levels & Directions</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 8px;
+            font-size: 11px;
+            height: 100vh;
+            overflow: hidden;
+            /* Prevents whole page scrolling */
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            height: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .act-card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            /* Prevents card breakdown */
+        }
+
+        /* Allows long lists to scroll internally if they exceed viewport */
+        .scrollable-list {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 4px;
+        }
+
+        h2 {
+            color: #ff9800;
+            font-size: 12px;
+            margin-top: 0;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            border-bottom: 1px solid #262626;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .zone {
+            color: #b3b3b3;
+            padding-right: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .levels {
+            font-family: monospace;
+            font-weight: bold;
+            color: #4caf50;
+            white-space: nowrap;
+        }
+
+        .boss-card h2 {
+            color: #f44336;
+        }
+
+        .boss-card .levels {
+            color: #ffeb3b;
+        }
+
+        /* Directions style overrides */
+        .directions-card h2 {
+            color: #00bcd4;
+        }
+
+        .directions-card .levels {
+            color: #e91e63;
+        }
+
+        /* Compact Custom Scrollbars */
+        .scrollable-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .scrollable-list::-webkit-scrollbar-track {
+            background: #121212;
+        }
+
+        .scrollable-list::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 2px;
+        }
+
+        .scrollable-list::-webkit-scrollbar-thumb:hover {
+            background: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="column">
+            <div class="act-card" style="flex: 1;">
+                <h2>Act 1</h2>
+                <div class="scrollable-list">
+                    <ul>
+                        <li><span class="zone">Blood Moor</span><span class="levels">1/26/51</span></li>
+                        <li><span class="zone">Den of Evil</span><span class="levels">1/26/51</span></li>
+                        <li><span class="zone">Cold Plains</span><span class="levels">2/27/52</span></li>
+                        <li><span class="zone">Cave Level 1</span><span class="levels">2/27/52</span></li>
+                        <li><span class="zone">Cave Level 2</span><span class="levels">2/27/52</span></li>
+                        <li><span class="zone">Burial Grounds</span><span class="levels">3/28/53</span></li>
+                        <li><span class="zone">Crypt</span><span class="levels">3/28/53</span></li>
+                        <li><span class="zone">Mausoleum</span><span class="levels">3/28/53</span></li>
+                        <li><span class="zone">Stony Field</span><span class="levels">4/29/54</span></li>
+                        <li><span class="zone">Tristram</span><span class="levels">6/31/56</span></li>
+                        <li><span class="zone">Underground Pass. 1</span><span class="levels">4/29/54</span></li>
+                        <li><span class="zone">Underground Pass. 2</span><span class="levels">4/29/54</span></li>
+                        <li><span class="zone">Dark Woods</span><span class="levels">5/30/55</span></li>
+                        <li><span class="zone">Black Marsh</span><span class="levels">6/31/56</span></li>
+                        <li><span class="zone">Hole Level 1</span><span class="levels">5/30/55</span></li>
+                        <li><span class="zone">Hole Level 2</span><span class="levels">5/30/55</span></li>
+                        <li><span class="zone">Tower Cellar Lvl 1</span><span class="levels">7/32/57</span></li>
+                        <li><span class="zone">Tower Cellar Lvl 2</span><span class="levels">7/32/57</span></li>
+                        <li><span class="zone">Tower Cellar Lvl 3</span><span class="levels">7/32/57</span></li>
+                        <li><span class="zone">Tower Cellar Lvl 4</span><span class="levels">7/32/57</span></li>
+                        <li><span class="zone">Tower Cellar Lvl 5</span><span class="levels">7/32/57</span></li>
+                        <li><span class="zone">Tamoe Highland</span><span class="levels">8/33/58</span></li>
+                        <li><span class="zone">Pit Level 1</span><span class="levels">7/32/57</span></li>
+                        <li><span class="zone">Pit Level 2</span><span class="levels">7/32/57</span></li>
+                        <li><span class="zone">Monastery Gate</span><span class="levels">8/33/58</span></li>
+                        <li><span class="zone">Outer Cloister</span><span class="levels">9/34/59</span></li>
+                        <li><span class="zone">Barracks</span><span class="levels">9/34/59</span></li>
+                        <li><span class="zone">Jail Level 1</span><span class="levels">10/35/60</span></li>
+                        <li><span class="zone">Jail Level 2</span><span class="levels">10/35/60</span></li>
+                        <li><span class="zone">Jail Level 3</span><span class="levels">10/35/60</span></li>
+                        <li><span class="zone">Inner Cloister</span><span class="levels">10/35/60</span></li>
+                        <li><span class="zone">Cathedral</span><span class="levels">11/36/61</span></li>
+                        <li><span class="zone">Catacombs Level 1</span><span class="levels">11/36/61</span></li>
+                        <li><span class="zone">Catacombs Level 2</span><span class="levels">11/36/61</span></li>
+                        <li><span class="zone">Catacombs Level 3</span><span class="levels">12/37/62</span></li>
+                        <li><span class="zone">Catacombs Level 4</span><span class="levels">12/37/62</span></li>
+                        <li><span class="zone">Secret Cow Level</span><span class="levels">28/53/78</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="act-card boss-card" style="flex-shrink: 0;">
+                <h2>Act Bosses</h2>
+                <ul>
+                    <li><span class="zone">Andariel</span><span class="levels">12/37/62</span></li>
+                    <li><span class="zone">Duriel</span><span class="levels">22/47/72</span></li>
+                    <li><span class="zone">Mephisto</span><span class="levels">26/51/76</span></li>
+                    <li><span class="zone">Diablo</span><span class="levels">40/65/90</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="act-card" style="height: 75%;">
+                <h2>Act 2</h2>
+                <div class="scrollable-list">
+                    <ul>
+                        <li><span class="zone">Sewers Level 1</span><span class="levels">13/38/63</span></li>
+                        <li><span class="zone">Sewers Level 2</span><span class="levels">13/38/63</span></li>
+                        <li><span class="zone">Sewers Level 3</span><span class="levels">14/39/64</span></li>
+                        <li><span class="zone">Rocky Waste</span><span class="levels">14/39/64</span></li>
+                        <li><span class="zone">Stony Tomb Level 1</span><span class="levels">12/37/62</span></li>
+                        <li><span class="zone">Stony Tomb Level 2</span><span class="levels">12/37/62</span></li>
+                        <li><span class="zone">Dry Hills</span><span class="levels">15/40/65</span></li>
+                        <li><span class="zone">Halls of the Dead Lvl 1</span><span class="levels">12/37/62</span></li>
+                        <li><span class="zone">Halls of the Dead Lvl 2</span><span class="levels">13/38/63</span></li>
+                        <li><span class="zone">Halls of the Dead Lvl 3</span><span class="levels">13/38/63</span></li>
+                        <li><span class="zone">Far Oasis</span><span class="levels">16/41/66</span></li>
+                        <li><span class="zone">Maggot Lair Level 1</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Maggot Lair Level 2</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Maggot Lair Level 3</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Lost City</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Ancient Tunnels</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Valley of Snakes</span><span class="levels">18/43/68</span></li>
+                        <li><span class="zone">Claw Viper Temple 1</span><span class="levels">14/39/64</span></li>
+                        <li><span class="zone">Claw Viper Temple 2</span><span class="levels">14/39/64</span></li>
+                        <li><span class="zone">Harem Level 2</span><span class="levels">13/38/63</span></li>
+                        <li><span class="zone">Palace Cellar Level 1</span><span class="levels">13/38/63</span></li>
+                        <li><span class="zone">Palace Cellar Level 2</span><span class="levels">13/38/63</span></li>
+                        <li><span class="zone">Palace Cellar Level 3</span><span class="levels">13/38/63</span></li>
+                        <li><span class="zone">Arcane Sanctuary</span><span class="levels">14/39/64</span></li>
+                        <li><span class="zone">Canyon of Magi</span><span class="levels">16/41/66</span></li>
+                        <li><span class="zone">Tal Rasha's Tomb (1)</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Tal Rasha's Tomb (2)</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Tal Rasha's Tomb (3)</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Tal Rasha's Tomb (4)</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Tal Rasha's Tomb (5)</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Tal Rasha's Tomb (6)</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Tal Rasha's Tomb (7)</span><span class="levels">17/42/67</span></li>
+                        <li><span class="zone">Duriel's Lair</span><span class="levels">17/42/67</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="act-card" style="flex: 0.7;">
+                <h2>Act 4</h2>
+                <div class="scrollable-list">
+                    <ul>
+                        <li><span class="zone">Outer Steppes</span><span class="levels">26/51/76</span></li>
+                        <li><span class="zone">Plains of Despair</span><span class="levels">26/51/76</span></li>
+                        <li><span class="zone">City of the Damned</span><span class="levels">27/52/77</span></li>
+                        <li><span class="zone">River of Flame</span><span class="levels">27/52/77</span></li>
+                        <li><span class="zone">Chaos Sanctuary</span><span class="levels">28/53/78</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="act-card" style="flex: 1.5;">
+                <h2>Act 3</h2>
+                <div class="scrollable-list">
+                    <ul>
+                        <li><span class="zone">Spider Forest</span><span class="levels">21/46/71</span></li>
+                        <li><span class="zone">Arachnid Lair</span><span class="levels">21/46/71</span></li>
+                        <li><span class="zone">Spider Cavern</span><span class="levels">21/46/71</span></li>
+                        <li><span class="zone">Great Marsh</span><span class="levels">21/46/71</span></li>
+                        <li><span class="zone">Swampy Pit Level 1</span><span class="levels">21/46/71</span></li>
+                        <li><span class="zone">Swampy Pit Level 2</span><span class="levels">21/46/71</span></li>
+                        <li><span class="zone">Swampy Pit Level 3</span><span class="levels">21/46/71</span></li>
+                        <li><span class="zone">Flayer Jungle</span><span class="levels">22/47/72</span></li>
+                        <li><span class="zone">Flayer Dungeon Lvl 1</span><span class="levels">22/47/72</span></li>
+                        <li><span class="zone">Flayer Dungeon Lvl 2</span><span class="levels">22/47/72</span></li>
+                        <li><span class="zone">Flayer Dungeon Lvl 3</span><span class="levels">22/47/72</span></li>
+                        <li><span class="zone">Lower Kurast</span><span class="levels">22/47/72</span></li>
+                        <li><span class="zone">Kurast Bazaar</span><span class="levels">22/47/72</span></li>
+                        <li><span class="zone">Upper Kurast</span><span class="levels">23/48/73</span></li>
+                        <li><span class="zone">Sewers Level 1</span><span class="levels">23/48/73</span></li>
+                        <li><span class="zone">Sewers Level 2</span><span class="levels">24/49/74</span></li>
+                        <li><span class="zone">Ruined Temple</span><span class="levels">23/48/73</span></li>
+                        <li><span class="zone">Disused Fane</span><span class="levels">23/48/73</span></li>
+                        <li><span class="zone">Forgotten Reliquary</span><span class="levels">23/48/73</span></li>
+                        <li><span class="zone">Forgotten Temple</span><span class="levels">24/49/74</span></li>
+                        <li><span class="zone">Ruined Fane</span><span class="levels">24/49/74</span></li>
+                        <li><span class="zone">Disused Reliquary</span><span class="levels">24/49/74</span></li>
+                        <li><span class="zone">Kurast Causeway</span><span class="levels">24/49/74</span></li>
+                        <li><span class="zone">Travincal</span><span class="levels">24/49/74</span></li>
+                        <li><span class="zone">Durance of Hate Lvl 1</span><span class="levels">25/50/75</span></li>
+                        <li><span class="zone">Durance of Hate Lvl 2</span><span class="levels">25/50/75</span></li>
+                        <li><span class="zone">Durance of Hate Lvl 3</span><span class="levels">25/50/75</span></li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div class="act-card directions-card" style="flex: 1.5;">
+                <h2>Map Directions</h2>
+                <div class="scrollable-list">
+                    <ul>
+                        <li><span class="zone">A1: Tower Cellars</span><span class="levels">Left</span></li>
+                        <li><span class="zone">A1: Outer Cloister</span><span class="levels">3 Maps / Left WP</span>
+                        </li>
+                        <li><span class="zone">A1: Jail 1 & 2</span><span class="levels">Straight</span></li>
+                        <li><span class="zone">A1: Jail 3</span><span class="levels">Left</span></li>
+                        <li><span class="zone">A1: Catacombs Lvl 2</span><span class="levels">Exit Right of WP</span>
+                        </li>
+                        <li><span class="zone">A2: Halls of the Dead</span><span class="levels">Left</span></li>
+                        <li><span class="zone">A2: Maggot Lair 1 & 2</span><span class="levels">Right</span></li>
+                        <li><span class="zone">A2: Maggot Lair 3</span><span class="levels">Straight</span></li>
+                        <li><span class="zone">A2: Viper Temple Lvl 1</span><span class="levels">Left</span></li>
+                        <li><span class="zone">A2: Tal Rasha Tombs</span><span class="levels">Left</span></li>
+                        <li><span class="zone">A3: Flayer Dungeon 1 & 2</span><span class="levels">Left</span></li>
+                        <li><span class="zone">A3: Sewers Lvl 1</span><span class="levels">Right of Chest</span></li>
+                        <li><span class="zone">A3: Durance of Hate 1</span><span class="levels">Left</span></li>
+                        <li><span class="zone">A3: Durance of Hate 2</span><span class="levels">Straight / WP
+                                Left</span></li>
+                        <li><span class="zone">A5: Crystalline Passage</span><span class="levels">Left</span></li>
+                        <li><span class="zone">A5: Glacial Trail</span><span class="levels">Left</span></li>
+                        <li><span class="zone">A5: Ancient's Way</span><span class="levels">Left</span></li>
+                        <li><span class="zone">A5: Worldstone Keep 2</span><span class="levels">Right of WP</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

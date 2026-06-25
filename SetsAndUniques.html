@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot Viewer</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --sidebar-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --accent-color: #00adb5;
+            --hover-bg: #2a2a2a;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        /* Sidebar Styling */
+        #sidebar {
+            width: 300px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+        }
+
+        #sidebar h2 {
+            padding: 20px;
+            margin: 0;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #333;
+            color: var(--accent-color);
+        }
+
+        #file-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        #file-list li {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #262626;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: background 0.2s ease;
+        }
+
+        #file-list li:hover {
+            background-color: var(--hover-bg);
+        }
+
+        #file-list li.active {
+            background-color: var(--accent-color);
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* Viewer Area Styling */
+        #viewer {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: var(--bg-color);
+            position: relative;
+        }
+
+        #viewer img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            border-radius: 4px;
+            display: none;
+        }
+
+        #placeholder {
+            font-size: 1.1rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="sidebar">
+        <h2>Screenshots</h2>
+        <ul id="file-list"></ul>
+    </div>
+
+    <div id="viewer">
+        <div id="placeholder">Select a screenshot from the sidebar to view it</div>
+        <img id="screenshot-display" src="" alt="Screenshot View">
+    </div>
+
+    <script>
+        // 1. MANUALLY ADD YOUR FILES HERE
+        // 'name' is what shows up in the sidebar. 
+        // 'path' is the local or web link to the image file.
+        const screenshots = [
+            { name: "Bonesnap AndS teeldriver", path: "SetsAndUniques/BonesnapAndSteeldriver.png" },
+            { name: "Angelics's Set", path: "SetsAndUniques/AngelicsSet.png" },
+            { name: "Iratha's Set", path: "SetsAndUniques/IrathasSet.png" },
+            { name: "Hsarus' Set", path: "SetsAndUniques/HsarusSet.png" },
+            { name: "Sigon's Set", path: "SetsAndUniques/SigonsSet.png" },
+            { name: "Isenheart's Set", path: "SetsAndUniques/IsenheartsSet.png" },
+            { name: "Milabrega's Set", path: "SetsAndUniques/MilabregasSet.png" },
+            { name: "Tancred's Set", path: "SetsAndUniques/TancredsSet.png" },
+            { name: "Vidala's Set", path: "SetsAndUniques/VidalasSet.png" }
+
+            
+        ];
+
+        const fileListEl = document.getElementById('file-list');
+        const displayImg = document.getElementById('screenshot-display');
+        const placeholder = document.getElementById('placeholder');
+
+        // Check if the array has items
+        if (screenshots.length === 0) {
+            placeholder.textContent = "No screenshots have been added to the list yet.";
+        } else {
+            // 2. Build the sidebar list dynamically from your array
+            screenshots.forEach(file => {
+                const li = document.createElement('li');
+                li.textContent = file.name;
+                li.title = file.name;
+
+                li.addEventListener('click', () => {
+                    // Remove 'active' class from all items
+                    document.querySelectorAll('#file-list li').forEach(el => el.classList.remove('active'));
+                    // Add 'active' class to clicked item
+                    li.classList.add('active');
+
+                    // Update image source and toggle visibility
+                    displayImg.src = file.path;
+                    displayImg.style.display = 'block';
+                    placeholder.style.display = 'none';
+                });
+
+                fileListEl.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>

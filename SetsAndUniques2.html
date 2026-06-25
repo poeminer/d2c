@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D2 Classic Items Evaluation Cheat Sheet</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #111;
+            color: #ddd;
+            font-size: 11px;
+            line-height: 1.2;
+            padding: 5px;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            font-size: 13px;
+            color: #ff9900;
+            border-bottom: 1px solid #444;
+            padding-bottom: 2px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Layout Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 0.9fr;
+            gap: 6px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .item-column {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            padding: 5px;
+            overflow-y: auto;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 4px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 2px 4px;
+            vertical-align: top;
+        }
+
+        th {
+            color: #00ffff;
+            font-weight: bold;
+            border-bottom: 1px solid #333;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #222;
+        }
+
+        /* Color Coding */
+        .unique-name {
+            color: #c7b373;
+            font-weight: bold;
+        }
+
+        .set-name {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0px 3px;
+            font-size: 9px;
+            border-radius: 2px;
+            font-weight: bold;
+            margin-right: 3px;
+        }
+
+        .tag-best {
+            background-color: #800000;
+            color: #ffcc00;
+        }
+
+        .tag-ladder {
+            background-color: #004d4d;
+            color: #00ffff;
+        }
+
+        .tag-pvp {
+            background-color: #4d1a00;
+            color: #ff6600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-container">
+        <!-- UNIQUES: JEWELRY, ARMOR & SHIELDS -->
+        <div class="item-column">
+            <h2>Uniques (Jewelry / Armor / Shields)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Evaluation / Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="unique-name">Stone of Jordan</td>
+                        <td><span class="tag tag-best">SOX</span> Used for socketing items</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Nail Ring</td>
+                        <td>Maybe MF (3x MF magic rings are better)</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">The Mahim-Oak Curio</td>
+                        <td><span class="tag tag-ladder">START</span> Useable low lvl / ladder starter</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Tarnhelm (40-50%)</td>
+                        <td>Good for Gold Find / Magic Find</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Wormskull</td>
+                        <td>Good for PvM Necromancer</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Blinkbat's Form</td>
+                        <td>Nice FHR armor, useful for Barbs</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Twitchthroe</td>
+                        <td>Kinda useful on all chars needing block!</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Darkglow</td>
+                        <td><span class="tag tag-pvp">PVP</span> Very cool vs Casters in PvP</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Hawkmail</td>
+                        <td><span class="tag tag-pvp">PVP</span> Very good for stacking Cold Res</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Rattlecage</td>
+                        <td>Good for Barbs</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Goldskin</td>
+                        <td>Useful for Sorc, Barb, and Paladin</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Silks of the Victor</td>
+                        <td>Good for pre-BO swap on Barb</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Steelclash</td>
+                        <td><span class="tag tag-ladder">START</span> Good at beginning of ladder</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Swordback Hold</td>
+                        <td>Very nice for Twitchthroe build with Barb</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Wall of the Eyeless</td>
+                        <td>Very cool for Casters who need FCR</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">The Ward</td>
+                        <td>Cool res shield, very useful for PvM</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Uniques (Gloves, Boots, Belts & Weaps)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Evaluation / Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="unique-name">Bloodfist</td>
+                        <td>Good if you need FHR and mass life</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Chance Guards</td>
+                        <td><span class="tag tag-best">PERFECT</span> MF / GF Gloves</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Magefist</td>
+                        <td><span class="tag tag-best">PERFECT</span> For all Casters!</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Frostburn</td>
+                        <td><span class="tag tag-best">PERFECT</span> For ES (Energy Shield) Sorceress</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Hotspur</td>
+                        <td><span class="tag tag-best">BEST</span> For stacking Fire Res at PvM/PvP</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Goblin Toe</td>
+                        <td><span class="tag tag-best">BEST</span> BvB (Barb vs Barb) Boots</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Tearhaunch</td>
+                        <td><span class="tag tag-ladder">START</span> Good at start of ladder for Paladin</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Lenymo</td>
+                        <td>Very rare; useful on some Casters</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Nightsmoke</td>
+                        <td><span class="tag tag-ladder">START</span> Cool at beginning of ladder</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Goldwrap</td>
+                        <td>Good GF belt if you lack a nice Rare belt</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Gull</td>
+                        <td><span class="tag tag-best">BEST</span> MF weapon (100% MF!)</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">The Patriarch</td>
+                        <td><span class="tag tag-best">BEST</span> GF weapon (100% GF!)</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Spectral Shard</td>
+                        <td><span class="tag tag-best">BEST</span> Weapon for all Casters</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Raven Claw</td>
+                        <td><span class="tag tag-best">BEST</span> For early leveling with Enchant!</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Bonesnap</td>
+                        <td><span class="tag tag-ladder">START</span> Cool at beginning of ladder</td>
+                    </tr>
+                    <tr>
+                        <td class="unique-name">Steeldriver</td>
+                        <td><span class="tag tag-ladder">START</span> Cool at beginning of ladder</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SET ITEMS & QUICK LOOK -->
+        <div class="item-column">
+            <h2>Set Items</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Set / Pieces</th>
+                        <th>Evaluation / Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="set-name">Death Set<br><small>(Gloves + Belt)</small></td>
+                        <td>Good for Amazon</td>
+                    </tr>
+                    <tr>
+                        <td class="set-name">Cleglaw Set<br><small>(Gloves + Weap)</small></td>
+                        <td><span class="tag tag-pvp">PVP</span> Good for BvB (Barb vs Barb)</td>
+                    </tr>
+                    <tr>
+                        <td class="set-name">Berserker Set<br><small>(Armor)</small></td>
+                        <td>For pre-BO swap on Barb</td>
+                    </tr>
+                    <tr>
+                        <td class="set-name">Angelic Set<br><small>(Rings + Amulet)</small></td>
+                        <td>Excellent Attack Rating for Barb</td>
+                    </tr>
+                    <tr>
+                        <td class="set-name">Iratha Set<br><small>(Full Set)</small></td>
+                        <td>Useful overall for Barbs, Sorcs, etc.</td>
+                    </tr>
+                    <tr>
+                        <td class="set-name">Sigon Set<br><small>(Shield)</small></td>
+                        <td>Very cool, gives +1 All Skills</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 style="margin-top: 8px;">Quick Reference Tags</h2>
+            <table style="font-size: 10px;">
+                <tr>
+                    <td><span class="tag tag-best" style="margin:0;">BEST / PERFECT</span></td>
+                    <td>BiS (Best in Slot) or baseline essential item.</td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-ladder" style="margin:0;">START</span></td>
+                    <td>Highly useful untuned / day-1 ladder gear.</td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-pvp" style="margin:0;">PVP</span></td>
+                    <td>Niche or vital resistances/stats for dueling.</td>
+                </tr>
+                <tr>
+                    <td><strong>BO / Pre-BO</strong></td>
+                    <td>Battle Orders buffing gear for Barbarians.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D2 Classic Whirlwind Simulator</title>
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --panel-bg: #1e1e1e;
+            --border-color: #3a3a3a;
+            --gold: #d4af37;
+            --crimson: #8b0000;
+            --crimson-hover: #a50000;
+            --text-main: #e6e6e6;
+            --text-muted: #888;
+            --tooltip-bg: #2a2a2a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .dashboard {
+            max-width: 1300px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            background: var(--bg-dark);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .section {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        .input-group {
+            margin-bottom: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .input-group input[type="number"],
+        .input-group input[type="text"] {
+            width: 90px;
+            padding: 0.3rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: var(--gold);
+            border-radius: 4px;
+            text-align: right;
+        }
+
+        .input-group input[type="number"]:focus,
+        .input-group input[type="text"]:focus {
+            outline: 2px solid var(--crimson);
+            border-color: transparent;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Tooltip Styles */
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            position: relative;
+            cursor: help;
+        }
+
+        .stat-row:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .stat-value {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            width: max-content;
+            background-color: var(--tooltip-bg);
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 0.8rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid var(--gold);
+            font-size: 0.85rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+            line-height: 1.4;
+        }
+
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--gold) transparent transparent transparent;
+        }
+
+        /* Target Stats Table */
+        .target-stats {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .target-stats th,
+        .target-stats td {
+            text-align: right;
+            padding: 0.4rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .target-stats th {
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .target-stats th:first-child,
+        .target-stats td:first-child {
+            text-align: left;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        .target-stats input {
+            width: 50px;
+            background: var(--bg-dark);
+            border: 1px dashed var(--border-color);
+            color: var(--gold);
+            text-align: right;
+            padding: 2px;
+        }
+
+        .simulation-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            background: var(--panel-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--bg-dark);
+            border-color: var(--gold);
+        }
+
+        .btn-sim {
+            background: var(--crimson);
+            color: var(--text-main);
+            border: 1px solid var(--gold);
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .btn-sim:hover {
+            background: var(--crimson-hover);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .result-header {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.3rem;
+        }
+
+        .result-diff-label {
+            font-weight: bold;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+        }
+
+        .result-cell {
+            text-align: center;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+        }
+
+        .config-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Hidden file input */
+        #importConfig {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <!-- LEFT PANEL: INPUTS -->
+        <div class="panel">
+            <h2>Barbarian Configuration</h2>
+
+            <div class="config-controls">
+                <button class="btn" onclick="exportConfig()">Export Config (JSON)</button>
+                <button class="btn" onclick="document.getElementById('importConfig').click()">Import Config</button>
+                <input type="file" id="importConfig" accept=".json" onchange="importConfig(event)">
+            </div>
+
+            <div class="section">
+                <h3>Core Stats</h3>
+                <div class="input-group">
+                    <label for="clvl">Character Level (clvl)</label>
+                    <input type="number" id="clvl" value="85" min="1" max="99">
+                </div>
+                <div class="input-group">
+                    <label for="ar">Base Attack Rating (from gear)</label>
+                    <input type="number" id="ar" value="2500" min="1">
+                </div>
+                <div class="input-group">
+                    <label for="str">Total Strength</label>
+                    <input type="number" id="str" value="200" min="10">
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Weapon Damage</h3>
+                <div class="input-group">
+                    <label for="minDmg">Minimum Damage</label>
+                    <input type="number" id="minDmg" value="150" min="1">
+                </div>
+                <div class="input-group">
+                    <label for="maxDmg">Maximum Damage</label>
+                    <input type="number" id="maxDmg" value="300" min="2">
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Skills & Modifiers</h3>
+                <div class="input-group">
+                    <label for="wwLvl">Whirlwind Level</label>
+                    <input type="number" id="wwLvl" value="20" min="1">
+                </div>
+                <div class="input-group">
+                    <label for="masteryLvl">Mace Mastery Level</label>
+                    <input type="number" id="masteryLvl" value="20" min="0">
+                </div>
+
+                <div class="input-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="useBc" checked>
+                        <label for="useBc">Battle Cry Active</label>
+                    </div>
+                    <div>
+                        <input type="number" id="bcDefRed" value="52" min="0" max="100" style="width: 50px;"> % Def Red.
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="cbChance">Crushing Blow Chance (%)</label>
+                    <input type="number" id="cbChance" value="35" min="0" max="100">
+                </div>
+                <div class="input-group">
+                    <label for="dsChance">Deadly Strike Chance (%)</label>
+                    <input type="number" id="dsChance" value="33" min="0" max="100">
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL: STATS, TARGETS & RESULTS -->
+        <div class="panel">
+
+            <div class="section">
+                <h2>Final Stat Sheet</h2>
+
+                <div class="stat-row">
+                    <span>Total Off-Weapon ED:</span>
+                    <span class="stat-value" id="dispTotalEd">0%</span>
+                    <div class="tooltip" id="tooltipEd">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <div class="stat-row">
+                    <span>Final Damage Range:</span>
+                    <span class="stat-value" id="dispDmgRange">0 - 0</span>
+                    <div class="tooltip" id="tooltipDmg">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <div class="stat-row">
+                    <span>Combined Double Damage:</span>
+                    <span class="stat-value" id="dispTotalDd">0%</span>
+                    <div class="tooltip" id="tooltipDd">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <div class="stat-row">
+                    <span>Final Attack Rating:</span>
+                    <span class="stat-value" id="dispFinalAr">0</span>
+                    <div class="tooltip" id="tooltipAr"></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Target Statistics</h2>
+                <table class="target-stats">
+                    <thead>
+                        <tr>
+                            <th>Difficulty</th>
+                            <th>Level</th>
+                            <th>HP</th>
+                            <th>Def</th>
+                            <th>Block</th>
+                            <th>PDR</th>
+                            <th>Hit%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Normal</td>
+                            <td>40</td>
+                            <td>24,000</td>
+                            <td>187</td>
+                            <td>0%</td>
+                            <td>0%</td>
+                            <td id="hitNorm" class="stat-value">0%</td>
+                        </tr>
+                        <tr>
+                            <td>Nightmare</td>
+                            <td>62</td>
+                            <td>90,000</td>
+                            <td>1026</td>
+                            <td>40%</td>
+                            <td>0%</td>
+                            <td id="hitNm" class="stat-value">0%</td>
+                        </tr>
+                        <tr>
+                            <td>Hell</td>
+                            <td>94</td>
+                            <td>113,000</td>
+                            <td>2,500</td>
+                            <td>50%</td>
+                            <td>45%</td>
+                            <td id="hitHell" class="stat-value">0%</td>
+                        </tr>
+                        <tr style="background: rgba(212, 175, 55, 0.1);">
+                            <td>Custom</td>
+                            <td><input type="number" id="custLvl" value="90"></td>
+                            <td><input type="number" id="custHp" value="150000" style="width:70px"></td>
+                            <td><input type="number" id="custDef" value="3000"></td>
+                            <td><input type="number" id="custBlock" value="50">%</td>
+                            <td><input type="number" id="custPdr" value="50">%</td>
+                            <td id="hitCust" class="stat-value">0%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="simulation-controls">
+                <button class="btn-sim" onclick="runAllSimulations()">Simulate All Targets (1k Iters)</button>
+
+                <div class="results-grid">
+                    <div></div> <!-- Empty top-left cell -->
+                    <div class="result-header">Average</div>
+                    <div class="result-header">Fastest</div>
+                    <div class="result-header">Slowest</div>
+
+                    <div class="result-diff-label">Normal</div>
+                    <div class="result-cell" id="resAvgNorm">-- s</div>
+                    <div class="result-cell" id="resMinNorm">-- s</div>
+                    <div class="result-cell" id="resMaxNorm">-- s</div>
+
+                    <div class="result-diff-label">Nightmare</div>
+                    <div class="result-cell" id="resAvgNm">-- s</div>
+                    <div class="result-cell" id="resMinNm">-- s</div>
+                    <div class="result-cell" id="resMaxNm">-- s</div>
+
+                    <div class="result-diff-label">Hell</div>
+                    <div class="result-cell" id="resAvgHell">-- s</div>
+                    <div class="result-cell" id="resMinHell">-- s</div>
+                    <div class="result-cell" id="resMaxHell">-- s</div>
+
+                    <div class="result-diff-label">Custom</div>
+                    <div class="result-cell" id="resAvgCust">-- s</div>
+                    <div class="result-cell" id="resMinCust">-- s</div>
+                    <div class="result-cell" id="resMaxCust">-- s</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- BASE TARGET STATS ---
+        const BASE_TARGETS = {
+            normal: { level: 40, hp: 24000, def: 187, block: 0, pdr: 0 },
+            nightmare: { level: 62, hp: 90000, def: 1026, block: 40, pdr: 0 },
+            hell: { level: 94, hp: 113000, def: 2500, block: 50, pdr: 0.45 }
+        };
+
+        // Get dynamic custom target
+        function getCustomTarget() {
+            return {
+                level: parseInt(document.getElementById('custLvl').value) || 1,
+                hp: parseInt(document.getElementById('custHp').value) || 1,
+                def: parseInt(document.getElementById('custDef').value) || 0,
+                block: parseInt(document.getElementById('custBlock').value) || 0,
+                pdr: (parseInt(document.getElementById('custPdr').value) || 0) / 100
+            };
+        }
+
+        // --- JSON IMPORT / EXPORT ---
+        function exportConfig() {
+            const config = {
+                clvl: document.getElementById('clvl').value,
+                ar: document.getElementById('ar').value,
+                str: document.getElementById('str').value,
+                minDmg: document.getElementById('minDmg').value,
+                maxDmg: document.getElementById('maxDmg').value,
+                wwLvl: document.getElementById('wwLvl').value,
+                masteryLvl: document.getElementById('masteryLvl').value,
+                useBc: document.getElementById('useBc').checked,
+                bcDefRed: document.getElementById('bcDefRed').value,
+                cbChance: document.getElementById('cbChance').value,
+                dsChance: document.getElementById('dsChance').value
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(config, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "d2_barb_config.json");
+            document.body.appendChild(downloadAnchorNode); // required for firefox
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        function importConfig(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const config = JSON.parse(e.target.result);
+                    // Map JSON to inputs
+                    if (config.clvl) document.getElementById('clvl').value = config.clvl;
+                    if (config.ar) document.getElementById('ar').value = config.ar;
+                    if (config.str) document.getElementById('str').value = config.str;
+                    if (config.minDmg) document.getElementById('minDmg').value = config.minDmg;
+                    if (config.maxDmg) document.getElementById('maxDmg').value = config.maxDmg;
+                    if (config.wwLvl) document.getElementById('wwLvl').value = config.wwLvl;
+                    if (config.masteryLvl) document.getElementById('masteryLvl').value = config.masteryLvl;
+                    if (config.useBc !== undefined) document.getElementById('useBc').checked = config.useBc;
+                    if (config.bcDefRed) document.getElementById('bcDefRed').value = config.bcDefRed;
+                    if (config.cbChance) document.getElementById('cbChance').value = config.cbChance;
+                    if (config.dsChance) document.getElementById('dsChance').value = config.dsChance;
+
+                    updateUI();
+                } catch (err) {
+                    alert("Error parsing JSON config file.");
+                }
+            };
+            reader.readAsText(file);
+            // reset input so same file can be uploaded again if needed
+            event.target.value = '';
+        }
+
+
+        // --- CORE CALCULATOR LOGIC ---
+        function getDerivedStats() {
+            // Fetch Inputs
+            const clvl = parseInt(document.getElementById('clvl').value) || 1;
+            const ar = parseInt(document.getElementById('ar').value) || 1;
+            const str = parseInt(document.getElementById('str').value) || 0;
+            const minDmg = parseInt(document.getElementById('minDmg').value) || 1;
+            const maxDmg = parseInt(document.getElementById('maxDmg').value) || 2;
+            const wwLvl = parseInt(document.getElementById('wwLvl').value) || 0;
+            const masteryLvl = parseInt(document.getElementById('masteryLvl').value) || 0;
+
+            const useBc = document.getElementById('useBc').checked;
+            const bcDefRed = parseInt(document.getElementById('bcDefRed').value) || 0;
+
+            const cbChance = parseInt(document.getElementById('cbChance').value) || 0;
+            const dsChance = parseInt(document.getElementById('dsChance').value) || 0;
+
+            // Damage Calculations
+            const masteryED = masteryLvl > 0 ? 28 + ((masteryLvl - 1) * 5) : 0;
+            // Whirlwind logic: -50 at lvl 1, +8 per level
+            const wwED = wwLvl > 0 ? 25 + ((wwLvl) * 5) : 0;
+            const totalED = str + masteryED + wwED;
+
+            const finalMin = Math.floor(minDmg * (1 + (totalED / 100)));
+            const finalMax = Math.floor(maxDmg * (1 + (totalED / 100)));
+
+            // Attack Rating
+            const wwAR = wwLvl > 0 ? (wwLvl * 5 + 45) : 0;
+            const masteryAR = masteryLvl > 0 ? (32 + (masteryLvl) * 8) : 0; // Hits exactly 192% at lvl 20
+            const totalArBonus = wwAR + masteryAR;
+
+            const finalAR = Math.floor(ar * (1 + (totalArBonus / 100)));
+
+            // Critical / Deadly Strike Calculations
+            const masteryCS = masteryLvl > 0
+                ? Math.min(35, Math.floor((35 * Math.floor((110 * masteryLvl) / (masteryLvl + 6))) / 100))
+                : 0;
+            const totalDD = masteryCS + (dsChance / 100) * (100 - masteryCS);
+
+            // Hit Chance Function
+            const getHitChance = (targetDef, targetLvl) => {
+                const effectiveDef = useBc ? targetDef * (1 - (bcDefRed / 100)) : targetDef;
+                let hc = 100 * (finalAR / (finalAR + effectiveDef)) * 2 * (clvl / (clvl + targetLvl));
+                return Math.min(95, Math.max(5, hc));
+            };
+
+            return {
+                totalED, str, masteryED, wwED,
+                minDmg, maxDmg, finalMin, finalMax,
+                masteryCS, dsChance, totalDD,
+                cbChance, getHitChance, clvl,
+                finalAR, wwAR, masteryAR, totalArBonus, ar
+            };
+        }
+
+        // --- UI UPDATER ---
+        function updateUI() {
+            const stats = getDerivedStats();
+
+            // 1. Update Display Values
+            document.getElementById('dispTotalEd').innerText = `${stats.totalED}%`;
+            document.getElementById('dispDmgRange').innerText = `${stats.finalMin} - ${stats.finalMax}`;
+            document.getElementById('dispTotalDd').innerText = `${stats.totalDD.toFixed(1)}%`;
+            document.getElementById('dispFinalAr').innerText = stats.finalAR;
+
+            // 2. Update Tooltips (Explaining the math)
+            document.getElementById('tooltipEd').innerHTML = `
+                <strong>Total ED% Breakdown:</strong><br>
+                +${stats.str}% (Strength)<br>
+                +${stats.masteryED}% (Mace Mastery Lvl ${document.getElementById('masteryLvl').value})<br>
+                ${stats.wwED >= 0 ? '+' : ''}${stats.wwED}% (Whirlwind Lvl ${document.getElementById('wwLvl').value})<br>
+                <hr style="border-color:#555; margin:4px 0;">
+                = ${stats.totalED}% Total
+            `;
+
+            document.getElementById('tooltipDmg').innerHTML = `
+                <strong>Damage Calculation:</strong><br>
+                Base: ${stats.minDmg} - ${stats.maxDmg}<br>
+                Multiplier: x${(1 + (stats.totalED / 100)).toFixed(2)} (1 + ${stats.totalED}%)<br>
+                <hr style="border-color:#555; margin:4px 0;">
+                = ${stats.finalMin} - ${stats.finalMax}
+            `;
+
+            document.getElementById('tooltipDd').innerHTML = `
+                <strong>Double Damage Intersection:</strong><br>
+                Mastery Critical Strike: ${stats.masteryCS}% (Amazon Basin Formula)<br>
+                Equipment Deadly Strike: ${stats.dsChance}%<br>
+                Formula: CS + (DS/100) * (100 - CS)<br>
+                <hr style="border-color:#555; margin:4px 0;">
+                = ${stats.totalDD.toFixed(1)}% Total Double Damage Probability
+            `;
+
+            // Populate tooltip breakdown
+            document.getElementById('tooltipAr').innerHTML = `
+                <strong>Final Attack Rating Breakdown:</strong><br>
+                Base AR (Gear/Dex): ${stats.ar}<br>
+                +${stats.wwAR}% (Whirlwind Lvl ${document.getElementById('wwLvl').value})<br>
+                +${stats.masteryAR}% (Mace Mastery Lvl ${document.getElementById('masteryLvl').value})<br>
+                Formula: Base * (1 + Total Skill AR% Bonuses)<br>
+                <hr style="border-color:#555; margin:4px 0;">
+                = ${stats.finalAR} Total Attack Rating
+            `;
+
+            // 3. Update Target Hit Chances
+            document.getElementById('hitNorm').innerText = `${stats.getHitChance(BASE_TARGETS.normal.def, BASE_TARGETS.normal.level).toFixed(1)}%`;
+            document.getElementById('hitNm').innerText = `${stats.getHitChance(BASE_TARGETS.nightmare.def, BASE_TARGETS.nightmare.level).toFixed(1)}%`;
+            document.getElementById('hitHell').innerText = `${stats.getHitChance(BASE_TARGETS.hell.def, BASE_TARGETS.hell.level).toFixed(1)}%`;
+
+            const cust = getCustomTarget();
+            document.getElementById('hitCust').innerText = `${stats.getHitChance(cust.def, cust.level).toFixed(1)}%`;
+        }
+
+        // --- SINGLE TARGET SIMULATION RUNNER ---
+        function runSingleSim(target, stats) {
+            const hitChance = stats.getHitChance(target.def, target.level);
+            const pdrMultiplier = 1 - target.pdr;
+
+            const iterations = 1000;
+            let totalFrames = 0;
+            let minFrames = Infinity;
+            let maxFrames = 0;
+
+            for (let i = 0; i < iterations; i++) {
+                let hp = target.hp;
+                let frames = 0;
+
+                while (hp > 0) {
+                    frames += 4; // Whirlwind Classic 4-frame 
+
+                    if (Math.random() * 100 < hitChance) {
+                        if (Math.random() * 100 >= target.block) {
+
+                            // Crushing Blow Check
+                            if (Math.random() * 100 < stats.cbChance) {
+                                let cbDmg = (hp * 0.12) * pdrMultiplier;
+                                hp -= cbDmg;
+                            }
+
+                            // Base Damage Roll
+                            let baseDmg = stats.finalMin + (Math.random() * (stats.finalMax - stats.finalMin));
+                            if (Math.random() * 100 < stats.totalDD) {
+                                baseDmg *= 2;
+                            }
+
+                            hp -= (baseDmg * pdrMultiplier);
+                        }
+                    }
+
+                    // Safety timeout (30k seconds)
+                    if (frames > 750000) break;
+                }
+
+                totalFrames += frames;
+                if (frames < minFrames) minFrames = frames;
+                if (frames > maxFrames) maxFrames = frames;
+            }
+
+            return {
+                avg: (totalFrames / iterations) / 25,
+                min: minFrames / 25,
+                max: maxFrames / 25
+            };
+        }
+
+        // --- MASTER SIMULATION LOGIC ---
+        function runAllSimulations() {
+            const stats = getDerivedStats();
+
+            const resNorm = runSingleSim(BASE_TARGETS.normal, stats);
+            const resNm = runSingleSim(BASE_TARGETS.nightmare, stats);
+            const resHell = runSingleSim(BASE_TARGETS.hell, stats);
+            const resCust = runSingleSim(getCustomTarget(), stats);
+
+            // Update Normal
+            document.getElementById('resAvgNorm').innerText = `${resNorm.avg.toFixed(2)} s`;
+            document.getElementById('resMinNorm').innerText = `${resNorm.min.toFixed(2)} s`;
+            document.getElementById('resMaxNorm').innerText = `${resNorm.max.toFixed(2)} s`;
+
+            // Update Nightmare
+            document.getElementById('resAvgNm').innerText = `${resNm.avg.toFixed(2)} s`;
+            document.getElementById('resMinNm').innerText = `${resNm.min.toFixed(2)} s`;
+            document.getElementById('resMaxNm').innerText = `${resNm.max.toFixed(2)} s`;
+
+            // Update Hell
+            document.getElementById('resAvgHell').innerText = `${resHell.avg.toFixed(2)} s`;
+            document.getElementById('resMinHell').innerText = `${resHell.min.toFixed(2)} s`;
+            document.getElementById('resMaxHell').innerText = `${resHell.max.toFixed(2)} s`;
+
+            // Update Custom
+            document.getElementById('resAvgCust').innerText = `${resCust.avg.toFixed(2)} s`;
+            document.getElementById('resMinCust').innerText = `${resCust.min.toFixed(2)} s`;
+            document.getElementById('resMaxCust').innerText = `${resCust.max.toFixed(2)} s`;
+
+            // Flash effect for feedback
+            const grid = document.querySelector('.results-grid');
+            grid.style.opacity = '0.3';
+            setTimeout(() => grid.style.opacity = '1', 150);
+        }
+
+        // Attach Event Listeners
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', updateUI);
+            input.addEventListener('change', updateUI);
+        });
+
+        // Init
+        window.onload = updateUI;
+    </script>
+</body>
+
+</html>

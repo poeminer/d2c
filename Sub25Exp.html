@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D2R Experience Penalty - Tier 1</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0c0c0c;
+            color: #ddd;
+            font-size: 18px; /* Increased base text size */
+            line-height: 1.5;
+            padding: 20px;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px; /* Widened the column considerably */
+            background-color: #141414;
+            border: 2px solid #3a3a3a;
+            padding: 25px 35px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.9);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #444;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+        h2 { font-size: 24px; color: #3a96ff; text-transform: uppercase; letter-spacing: 1px; }
+        .arrow { color: #3a96ff; font-size: 20px; }
+        p { color: #bbb; margin-bottom: 25px; font-size: 17px; text-align: justify; }
+        .highlight { color: #00ffaa; font-weight: bold; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 18px; /* Made table text much larger */
+        }
+        th, td {
+            padding: 8px 12px; /* Extra breathing room for rows */
+            text-align: center;
+            border-bottom: 1px solid #252525;
+        }
+        th {
+            color: #999;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 2px solid #444;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+        tr:nth-child(even) { background-color: #191919; }
+        
+        /* Alignments matching image_12feac.png exactly */
+        td:nth-child(1) { text-align: right; width: 45%; color: #eee; font-weight: bold; }
+        td:nth-child(2) { text-align: center; width: 25%; color: #aaa; }
+        td:nth-child(3) { text-align: right; width: 30%; color: #ff9900; font-weight: bold; padding-right: 25px; }
+        
+        /* Highlight 100% row */
+        .perfect-row { background-color: #1b2d1b !important; }
+        .perfect-row td:nth-child(1) { color: #55ff55; }
+        .perfect-row td:nth-child(3) { color: #55ff55; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h2>Tier 1: &lt; cLVL 25</h2>
+            <span class="arrow">▲</span>
+        </div>
+        
+        <p>In the first tier, killing monsters that are more than 5 Levels below or above your cLVL will result in diminishing returns of XP awarded. Each additional Level is modified by a set variable divided by 256 to determine the % of the <span class="highlight">Experience</span> you receive. This tier is designed to negatively impact the Player if the mLVL is significantly higher than the cLVL.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align: right;">mLVL</th>
+                    <th>x / 256</th>
+                    <th style="text-align: right; padding-right: 25px;">Percentage %</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>&gt; cLVL + 9</td><td>5</td><td>1.953125</td></tr>
+                <tr><td>cLVL + 9</td><td>38</td><td>14.84375</td></tr>
+                <tr><td>cLVL + 8</td><td>92</td><td>35.9375</td></tr>
+                <tr><td>cLVL + 7</td><td>174</td><td>67.96875</td></tr>
+                <tr><td>cLVL + 6</td><td>225</td><td>87.890625</td></tr>
+                <tr class="perfect-row"><td>cLVL + 5 to cLVL - 5</td><td>256</td><td>100</td></tr>
+                <tr><td>cLVL - 6</td><td>207</td><td>80.859375</td></tr>
+                <tr><td>cLVL - 7</td><td>159</td><td>62.109375</td></tr>
+                <tr><td>cLVL - 8</td><td>110</td><td>42.96875</td></tr>
+                <tr><td>cLVL - 9</td><td>61</td><td>23.828125</td></tr>
+                <tr><td>&lt; cLVL - 9</td><td>13</td><td>5.078125</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
